@@ -6,7 +6,8 @@ import java.util.List;
 
 public class MergeIntervals {
     public static int[][] merge(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0],b[0]));
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0],b[0])); //Sort the 2D array based on the 1st element of each sub-array
+        
         List<List<Integer>> ans = new ArrayList<>();
         for (int i = 0; i < intervals.length; i++) {
             if(ans.isEmpty() || ans.get(ans.size()-1).get(1)<intervals[i][0]){

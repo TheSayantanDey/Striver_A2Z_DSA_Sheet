@@ -2,43 +2,36 @@ import java.util.* ;
 import java.io.*;
 public class LongestSubarrayWithSumK {
 
-    //Brute force
-//    public static int longestSubarrayWithSumK(int []a, long k) {
-//        // Write your code here
-//        int count = 0,finalCount=0;
+    // Brute force
+    // Here we want to generate all the subarrays possible and check one by one
+//    int len = 0, maxlen = 0;
 //        for (int i = 0; i < a.length; i++) {
-//            if (a[i] == k){
-//                 count = 1;
-//                if(count>finalCount){
-//                    finalCount = count;
-//                }
-//            }else{
-//                int sum = a[i];
-//                for (int j = i+1; j < a.length; j++) {
-//                    sum = sum+a[j];
-//                    if(sum == k){
-//                        count = j-i+1;
-//                    }else if(sum>k){
-//                        if(count>finalCount){
-//                            finalCount = count;
-//                        }
-//                        break;
-//                    }
-//                }
+//        long sum = 0;
+//        for (int j = i; j < a.length; j++) {
+//            sum += a[j];
+//            if(sum==k){
+//                len = j-i+1;
+//                maxlen = Math.max(len,maxlen);
 //            }
+//            if(sum>k)
+//                break;
 //        }
-//        return finalCount;
 //    }
+//        return maxlen;
 
     //Better: Using hashmap (Optimal solution for both +ve and -ve numbers in array)
     public static int longestSubarrayWithSumK(int[] nums, int k){
+        // Write your code here.
         HashMap<Integer,Integer> map = new HashMap<>();
-        map.put(0,-1);
-        int totalSum = 0;
         int maxLen = 0;
+        int totalSum = 0;
         for (int i = 0; i < nums.length; i++) {
             totalSum += nums[i];
 
+            if(totalSum == k){
+                int len = i+1;
+                maxLen = Math.max(maxLen,len);
+            }
             //don't put the totalSum's key if it exists already, because we need the longest sub-array length
             if(!map.containsKey(totalSum)){
                 map.put(totalSum,i);
