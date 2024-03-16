@@ -15,57 +15,31 @@ public class NextPermutation {
             end--;
         }
     }
-    public static void marge(int[] arr,int start,int mid,int end){
-        int[] temp = new int[end+1];
-        int i=start;
-        int j=mid+1;
-        int k=start;
-        while(i<=mid && j<=end){
-            if(arr[i]<arr[j]){
-                temp[k++] = arr[i++];
-            }
-            else{
-                temp[k++] = arr[j++];
-            }
-        }
-        while(i<=mid){
-            temp[k++] = arr[i++];
-        }
-        while(j<=end){
-            temp[k++] = arr[j++];
-        }
-
-        for(int a=start;a<=end;a++){
-            arr[a] = temp[a];
-        }
-        return;
-    }
-    public static void margesort(int[] arr, int start, int end){
-        if(start == end){
-            return;
-        }
-        int mid= (start+end)/2;
-        margesort(arr,start,mid);
-        margesort(arr,mid+1,end);
-        marge(arr,start,mid,end);
-    }
     public static void nextPermutation(int[] nums) {
+//Optimal solution using Observation
+
+        //Find the targetIndex
         int targetIndex = -1;
         for (int i = 0; i < nums.length-1; i++) {
             if(nums[i]<nums[i+1]){
                 targetIndex = i;
             }
         }
-//        margesort(nums,targetIndex+1,nums.length-1);
+        // Reversing/Sorting the next part after the targetIndex
         reverse(nums,targetIndex+1,nums.length-1); //Will do the same thing as it is in reverse sorted
 
+        //Edge case, if no targetIndex found, means this is the greatest permutation
+        //So return after reversing
         if(targetIndex == -1){
             return;
         }
+
+        //Searching for the nearest greater element in the right of targetIndex
         int targetIndex2 = targetIndex+1;
         while(nums[targetIndex2]<=nums[targetIndex]){
             targetIndex2++;
         }
+        //Swapping elements on targetIndex and targetIndex2 which gives final output
         swap(nums,targetIndex,targetIndex2);
         return;
     }
